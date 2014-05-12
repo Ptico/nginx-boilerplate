@@ -1,8 +1,5 @@
 #!/bin/bash
 hostname=$1
-config_file='generated/default.conf'
-
-echo "Creating config for $hostname"
 
 function ask_attribute {
   echo "Set value of $1:"
@@ -12,14 +9,26 @@ function ask_attribute {
   eval "$1='$value'"
 }
 
-ask_attribute 'public_folder'
+function render {
+  while read -r line
+  do
+    line=${line//\"/\\\"}
+    line=${line//\`/\\\`}
+    line=${line//\$/\\\$}
+    line=${line//\\\${/\${}
+    eval "echo \"$line\"" >> "$config_file"
+  done < "$1"
+}
 
+
+echo "Creating config for $hostname"
+
+ask_attribute 'public_folder' # get value and create "public_folder"
+
+config_file='generated/default.conf'
 mkdir -p 'generated'
 echo '' > "$config_file" # clear previous file
 
-while read line
-do
-    eval echo "$line" >> "$config_file"
-done < "templates/default.tmpl.conf"
+render "templates/default.tmpl.conf"
 
 echo "Config file created!"
