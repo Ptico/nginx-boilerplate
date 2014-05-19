@@ -42,6 +42,10 @@ If nginx don't throw any error run:
 
 If you see your certificate chain: you are ready to go!
 
+## Additional tools
+
+https://github.com/lebinh/ngxtop
+
 ## Required modules
 
 * ngx_http_gzip_static_module
