@@ -1,10 +1,12 @@
 #!/bin/bash
+NGINX_PATH=${NGINX_PATH:-/etc/nginx}
+
 # colors
 RED_BACK='\033[0;41;30m'
 STD_BACK='\033[0;0;39m'
 
-GRN_FONT='\e[1;32m'
-STD_FONT='\e[0m'
+GRN_FONT='\033[1;32m'
+STD_FONT='\033[0m'
 
 # host config file render functions
 
@@ -45,7 +47,6 @@ function render {
 
 
 # install config files functions
-
 function install_configs {
   cp -r conf "$NGINX_PATH"
   cp nginx.conf "$NGINX_PATH"
@@ -55,15 +56,6 @@ function install_configs {
 
 
 # script section
-
-if ! [ -n "$NGINX_PATH" ]
-  then
-    echo -e "${RED_BACK}NGINX_PATH is not set${STD_BACK}"
-    echo "default is NGINX_PATH='/etc/nginx'"
-
-    NGINX_PATH='/etc/nginx'
-  fi
-
 if [ "$1" == 'host' ]
   then
     generate_host $2
