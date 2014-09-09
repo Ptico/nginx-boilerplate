@@ -12,6 +12,8 @@ STD_FONT='\033[0m'
 
 function generate_host {
   hostname=$1
+  name=$(echo $hostname | tr '-' '_' | tr '.' '_')
+
   echo -e "${GRN_FONT}Creating host config for $hostname${STD_FONT}"
   ask_attribute 'public_folder' # get value and create "public_folder"
 
