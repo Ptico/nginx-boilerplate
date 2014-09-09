@@ -56,17 +56,22 @@ function install_configs {
   exit
 }
 
+function usage {
+  echo "Usage:"
+  echo "$0 generate_host host"
+  echo "$0 install"
+}
 
 # script section
-if [ "$1" == 'host' ]
-  then
-    generate_host $2
-  fi
+case "$1" in
+    "host")
+        generate_host $2
+        ;;
+    "install")
+        install_configs
+        ;;
+    *)
+        usage
+        ;; 
+esac
 
-if [ "$1" == 'install' ]
-  then
-    install_configs
-  fi
-
-
-echo -e "${GRN_FONT}NOTHING TO DO${STD_FONT}"
